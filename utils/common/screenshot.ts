@@ -10,23 +10,12 @@ function createFolder(folderPath: string): void {
     try {
         if (!fs.existsSync(pathSS)) {
             fs.mkdirSync(pathSS);
-            console.log(`Folder is created: ${pathSS}`);
+            // console.log(`Folder is created: ${pathSS}`);
         } else {
-            console.warn(`Folder already exists: ${pathSS}`);
+            // console.warn(`Folder already exists: ${pathSS}`);
         }
     } catch (error) {
         console.error(`Error creating folder: ${error}`);
-    }
-}
-
-// Function to count the number of files in a folder
-function countFilesInFolder(folderPath: string): number {
-    try {
-        const files = fs.readdirSync(folderPath);
-        return files.length;
-    } catch (error) {
-        console.error(`Error reading files in '${folderPath}': ${error.message}`);
-        return 0;
     }
 }
 
@@ -58,18 +47,10 @@ export class Screenshot {
         const testPath = this.getTestDir();
         createFolder(testPath);
         const testCaseName = this.getTestTitle().split(': ')[0];
-
-        // Count the number of existing screenshots in the folder
-        let numberImg = countFilesInFolder(`${rootPath}/${testPath}`);
-        console.log(`Number of existing screenshots: ${numberImg}`);
-
         // Increment the screenshot index for the new screenshot
         this.screenshotIndex++;
-
         // Define the file name for the new screenshot
         const screenshotFileName = `${rootPath}/${testPath}/${testCaseName}_SS${this.screenshotIndex}.png`;
-        console.log(`Screenshot file name: ${screenshotFileName}`);
-
         // Take the screenshot and save it with the specified file name
         await this.page.screenshot({ path: screenshotFileName });
     }
